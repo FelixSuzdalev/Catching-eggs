@@ -42,9 +42,12 @@ namespace Catching_eggs
 
         public MainWindow1()
         {
+            MenuWindow menuWindow = new MenuWindow();
+            menuWindow.ShowDialog();
+
             InitializeComponent();
 
-
+            playerName.Content = "Игрок: " + MenuWindow.playerName1;
             gameTimer.Interval = TimeSpan.FromMilliseconds(20);
             gameTimer.Tick += GameLogic;
             gameTimer.Start();
@@ -107,13 +110,15 @@ namespace Catching_eggs
                         attemptCounter -= 1;
                         itemRemover.Add(item);
                     }
-                    if (attemptCounter < 0)
+                    if (attemptCounter < 1)
                     {
                         gameTimer.Stop();
                         score.Visibility = Visibility.Collapsed;
                         attempt.Visibility = Visibility.Collapsed;
                         basket.Visibility = Visibility.Collapsed;
+
                         FinalMenu();
+                        break;
                     }
                 }
             }
@@ -182,8 +187,6 @@ namespace Catching_eggs
 
         private void FinalMenu()
         {
-
-
             Canvas canvas = new Canvas();
 
             ImageBrush background = new ImageBrush();
@@ -213,11 +216,20 @@ namespace Catching_eggs
             Canvas.SetTop(exit_button, 310);
             canvas.Children.Add(exit_button);
             this.Content = canvas;
+            SafeScore();
 
             void ExitButton_Click(object sender, RoutedEventArgs e)
             {
                 System.Windows.Application.Current.Shutdown();
             }
+        }
+        private void SafeScore()
+        {
+            StreamWriter writer = new StreamWriter(new FileStream(MenuWindow.filePath, FileMode.Append, FileAccess.Write));
+            writer.WriteLine("Score: " + yscore);
+            writer.WriteLine("Overtime: " + MenuWindow.time);
+            writer.Close();
+
         }
         private void Music()
         {
@@ -232,6 +244,6 @@ namespace Catching_eggs
                 player.Play();
             }
         }
-        
+
     }
 }

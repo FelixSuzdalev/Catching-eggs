@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Catching_eggs"
         mc:Ignorable="d"
-        Title="Лови яйца" Height="450" Width="700">
+        Title="Лови яйца" Height="450" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
